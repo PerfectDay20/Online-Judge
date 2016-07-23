@@ -1,5 +1,5 @@
 import java.util.Scanner;
-//Coin Change problem, same with UVa 00357
+
 class Main{
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -8,7 +8,11 @@ class Main{
         while (sc.hasNextInt()) {
             int n = sc.nextInt();
             long ans = change[n];
-            System.out.println(ans);
+            if (ans == 1) {
+                System.out.printf("There is only 1 way to produce %d cents change.\n", n);
+            } else {
+                System.out.printf("There are %d ways to produce %d cents change.\n", ans, n);
+            }
             //System.out.println(test[test.length - 1][n]);
         }
     }
