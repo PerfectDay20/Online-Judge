@@ -1,0 +1,44 @@
+// Scala
+object Solution {
+    def numJewelsInStones(J: String, S: String): Int = {
+      val jewelTypes = J.toSet
+      S.count(jewelTypes.contains)
+    }
+  }
+
+// Java
+class Solution {
+    public int numJewelsInStones(String J, String S) {
+        Set<Integer> jewelsType = J.chars().boxed().collect(Collectors.toSet());
+        return (int) S.chars().filter(jewelsType::contains).count();
+    }
+}
+
+// Java, faster and verbose
+class Solution {
+    public int numJewelsInStones(String J, String S) {
+        Set<Character> jewelsType = new HashSet<>(J.length());
+        for(char c: J.toCharArray()){
+            jewelsType.add(c);
+        }
+        int count = 0;
+        for(char c: S.toCharArray()){
+            if (jewelsType.contains(c)) {
+                count++;
+            }
+        }
+        return count;
+    }
+}
+
+// Python3
+class Solution:
+    def numJewelsInStones(self, J, S):
+        """
+        :type J: str
+        :type S: str
+        :rtype: int
+        """
+        jewelsType = set(J)
+        return len([s for s in S if s in jewelsType])
+        # return sum(s in jewelsType for s in S)
