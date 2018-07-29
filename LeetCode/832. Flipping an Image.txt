@@ -1,0 +1,42 @@
+// Java
+class Solution {
+    public int[][] flipAndInvertImage(int[][] A) {
+        for(int[] line : A){
+            swap(line);
+            invert(line);
+        }
+        return A;
+    }
+    
+    private void swap(int[] line){
+        int n = line.length;
+        for (int i = 0; i < n / 2; i++) {
+            int t = line[i];
+            line[i] = line[n - 1 - i];
+            line[n - 1 - i] = t;
+        }
+    }
+    
+    private void invert(int[] line){
+        int n = line.length;
+        for (int i = 0; i < n; i++) {
+            line[i] = line[i] ^ 1;
+        }
+    }
+}
+
+// Scala
+object Solution {
+  def flipAndInvertImage(A: Array[Array[Int]]): Array[Array[Int]] = {
+    A.map(_.reverse.map(_ ^ 1))
+  }
+}
+
+// Python
+class Solution:
+    def flipAndInvertImage(self, A):
+        """
+        :type A: List[List[int]]
+        :rtype: List[List[int]]
+        """
+        return [[1 ^ x for x in line][::-1] for line in A]
