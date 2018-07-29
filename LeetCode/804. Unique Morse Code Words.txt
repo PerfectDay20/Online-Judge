@@ -1,0 +1,38 @@
+// Java
+class Solution {
+    public int uniqueMorseRepresentations(String[] words) {
+        String[] table =
+                {".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---", "-.-", ".-..", "--", "-.",
+                        "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-", "-.--", "--.."};
+        Set<String> set = new HashSet<>();
+        for (String word : words) {
+            StringBuilder sb = new StringBuilder();
+            for (byte c : word.getBytes()) {
+                sb.append(table[c - 'a']);
+            }
+            set.add(sb.toString());
+        }
+        return set.size();
+    }
+}
+
+// Scala
+object Solution {
+  def uniqueMorseRepresentations(words: Array[String]): Int = {
+    val table = Array(".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---", "-.-", ".-..", "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-", "-.--", "--..")
+    words.map(_.map(c => table(c - 'a')).mkString("")).toSet.size
+  }
+}
+
+// Python
+class Solution:
+    def uniqueMorseRepresentations(self, words):
+        """
+        :type words: List[str]
+        :rtype: int
+        """
+        table = [".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---", "-.-",
+                 ".-..", "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--",
+                 "-..-", "-.--", "--.."]
+
+        return len(set(map(lambda word: "".join(table[ord(c) - ord('a')] for c in word), words)))
