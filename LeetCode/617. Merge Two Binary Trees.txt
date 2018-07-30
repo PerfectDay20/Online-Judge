@@ -1,0 +1,77 @@
+// Java
+class Solution {
+    public TreeNode mergeTrees(TreeNode t1, TreeNode t2) {
+        if (t1 == null && t2 == null) {
+            return null;
+        }
+        int val = 0;
+        if (t1 != null) {
+            val += t1.val;
+        }
+        if (t2 != null) {
+            val += t2.val;
+        }
+
+        TreeNode root = new TreeNode(val);
+        
+        root.left = mergeTrees(leftOrNull(t1),leftOrNull(t2));
+        root.right = mergeTrees(rightOrNull(t1), rightOrNull(t2));
+        return root;
+    }
+    
+    private TreeNode leftOrNull(TreeNode t){
+        return t == null ? null : t.left;
+    }
+    private TreeNode rightOrNull(TreeNode t){
+        return t == null ? null : t.right;
+    }
+}
+
+// Scala
+object Solution {
+  def mergeTrees(t1: TreeNode, t2: TreeNode): TreeNode = {
+    if (t1 == null && t2 == null) {
+      return null
+    }
+
+    var value = 0
+    if (t1 != null) value += t1.value
+    if (t2 != null) value += t2.value
+
+    val root = new TreeNode(value)
+
+    root.left = mergeTrees(leftOrNull(t1),leftOrNull(t2))
+    root.right = mergeTrees(rightOrNull(t1),rightOrNull(t2))
+    
+    root
+  }
+
+  def leftOrNull(t: TreeNode): TreeNode = if (t == null) null else t.left
+
+  def rightOrNull(t: TreeNode): TreeNode = if (t == null) null else t.right
+}
+
+// Python
+class Solution:
+    def mergeTrees(self, t1, t2):
+        """
+        :type t1: TreeNode
+        :type t2: TreeNode
+        :rtype: TreeNode
+        """
+
+        def leftOrNone(t):
+            return t.left if t else None
+
+        def rightOrNone(t):
+            return t.right if t else None
+
+        if t1 is None and t2 is None:
+            return None
+        value = 0
+        if t1 is not None: value += t1.val
+        if t2 is not None: value += t2.val
+        root = TreeNode(value)
+        root.left = self.mergeTrees(leftOrNone(t1), leftOrNone(t2))
+        root.right = self.mergeTrees(rightOrNone(t1), rightOrNone(t2))
+        return root
