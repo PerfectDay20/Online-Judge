@@ -1,0 +1,39 @@
+// Java
+import java.util.Arrays;
+import java.util.stream.Collectors;
+// slow
+class Solution {
+    public String reverseWords(String s) {
+        return Arrays.stream(s.split(" "))
+                .map(ss -> new StringBuilder(ss).reverse().toString())
+                .collect(Collectors.joining(" "));
+    }
+}
+// fast
+class Solution {
+    public String reverseWords(String s) {
+        StringBuilder sb = new StringBuilder();
+        for (String ss : s.split(" ")) {
+            sb.append(new StringBuilder(ss).reverse());
+            sb.append(" ");
+        }
+        return sb.deleteCharAt(sb.length() - 1).toString();
+    }
+}
+// Scala
+object Solution {
+  def reverseWords(s: String): String = {
+    s.split(" ").map(_.reverse).mkString(" ")
+  }
+}
+
+// Python
+class Solution:
+    def reverseWords(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        return " ".join(ss[::-1] for ss in s.split(" "))
+        
+    
