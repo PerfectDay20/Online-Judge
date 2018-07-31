@@ -1,0 +1,66 @@
+// Java
+import java.util.ArrayList;
+import java.util.List;
+
+class Solution {
+    public List<Integer> selfDividingNumbers(int left, int right) {
+        List<Integer> result = new ArrayList<>();
+        for (int i = left; i <= right; i++) {
+            if (isDivide(i)) {
+                result.add(i);
+            }
+        }
+        return result;   
+    }
+
+    private boolean isDivide(int n){
+        int val = n;
+        while (val > 0) {
+            int low = val % 10;
+            if (low == 0 || n % low != 0) {
+                return false;
+            }
+            val /= 10;
+        }
+        return true;
+    }
+}
+
+// Scala
+object Solution {
+  def selfDividingNumbers(left: Int, right: Int): List[Int] = {
+    (left to right).filter(isDivide).toList
+  }
+  
+  def isDivide(n:Int):Boolean = {
+    var value = n
+    while (value > 0){
+      val low = value % 10
+      if( low == 0 || n % low !=0){
+        return false
+      }
+      value /= 10
+    }
+    true
+  }
+}
+
+// Python
+class Solution:
+    def selfDividingNumbers(self, left, right):
+        """
+        :type left: int
+        :type right: int
+        :rtype: List[int]
+        """
+
+        def isDivide(n):
+            value = n
+            while value > 0:
+                low = value % 10
+                if low == 0 or n % low != 0:
+                    return False
+                value //= 10
+            return True
+
+        return [x for x in range(left, right + 1) if isDivide(x)]
