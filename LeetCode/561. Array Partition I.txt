@@ -1,0 +1,29 @@
+// Java
+import java.util.Arrays;
+
+class Solution {
+    public int arrayPairSum(int[] nums) {
+        Arrays.sort(nums);
+        int sum = 0;
+        for (int i = 0, n = nums.length; i < n; i += 2) {
+            sum += nums[i];
+        }
+        return sum;
+    }
+}
+
+// Scala
+object Solution {
+  def arrayPairSum(nums: Array[Int]): Int = {
+    nums.sorted.zipWithIndex.filter(_._2 % 2 == 0).map(_._1).sum
+  }
+}
+
+// Python
+class Solution:
+    def arrayPairSum(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        return sum(sorted(nums)[::2])
