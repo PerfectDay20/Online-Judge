@@ -1,0 +1,64 @@
+// Java
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+class Solution {
+    public String[] findWords(String[] words) {
+        Map<Character, Integer> map = new HashMap<>(27);
+        for (char c : "qwertyuiop".toCharArray()) {
+            map.put(c, 0);
+        }
+        for (char c : "asdfghjkl".toCharArray()) {
+            map.put(c, 1);
+        }
+        for (char c : "zxcvbnm".toCharArray()) {
+            map.put(c, 2);
+        }
+
+        List<String> result = new ArrayList<>();
+        for (String word : words) {
+            String lower = word.toLowerCase();
+            int row = map.get(lower.charAt(0));
+            boolean isValid = true;
+            for (char c : lower.toCharArray()) {
+                if (map.get(c) != row) {
+                    isValid = false;
+                    break;
+                }
+            }
+            if (isValid) {
+                result.add(word);
+            }
+        }
+        return result.toArray(new String[0]);
+    }
+}
+// Scala
+import scala.collection.mutable
+
+object Solution {
+  def findWords(words: Array[String]): Array[String] = {
+    val keyboard = mutable.HashMap[Char, Int]()
+    "qwertyuiop".map(_ -> 0).foreach(keyboard += _)
+    "asdfghjkl".map(_ -> 1).foreach(keyboard += _)
+    "zxcvbnm".map(_ -> 2).foreach(keyboard += _)
+
+    words.filter(_.toLowerCase.map(keyboard).toSet.size == 1)
+  }
+}
+
+// Python
+class Solution:
+    def findWords(self, words):
+        """
+        :type words: List[str]
+        :rtype: List[str]
+        """
+        keyboard = dict()
+        keyboard.update({x: 0 for x in 'qwertyuiop'})
+        keyboard.update({x: 1 for x in 'asdfghjkl'})
+        keyboard.update({x: 2 for x in 'zxcvbnm'})
+
+        return [word for word in words if len(set(map(lambda x: keyboard[x], word.lower()))) == 1]
