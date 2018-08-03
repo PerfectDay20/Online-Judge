@@ -1,0 +1,54 @@
+// Java
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+class Solution {
+    public String[] findRestaurant(String[] list1, String[] list2) {
+        Map<String,Integer> map = new HashMap<>();
+        for (int i = 0, n = list1.length; i < n; i++) {
+            map.put(list1[i], i);
+        }
+
+        int minSum = Integer.MAX_VALUE;
+        List<String> result = new ArrayList<>();
+
+        for (int i = 0, n = list2.length; i < n; i++) {
+            String rest = list2[i];
+            if (map.containsKey(rest)) {
+                int sum = map.get(rest) + i;
+                if (sum < minSum) {
+                    minSum = sum;
+                    result.clear();
+                    result.add(rest);
+                } else if (sum == minSum) {
+                    result.add(rest);
+                }
+            }
+        }
+        return result.toArray(new String[0]);
+    }
+}
+
+// Scala
+object Solution {
+    def findRestaurant(list1: Array[String], list2: Array[String]): Array[String] = {
+      val map = list1.zipWithIndex.toMap
+      val restAndSum = list2.zipWithIndex.filter(t => map.contains(t._1)).map(t => (t._1, map(t._1) + t._2))
+      val minSum = restAndSum.map(_._2).min
+      restAndSum.filter(_._2 == minSum).map(_._1)
+    }
+  }
+
+// Python
+class Solution:
+    def findRestaurant(self, list1, list2):
+        """
+        :type list1: List[str]
+        :type list2: List[str]
+        :rtype: List[str]
+        """
+        map1 = {rest: i for (i, rest) in enumerate(list1)}
+        minSum = min(map1[rest] + i for (i, rest) in enumerate(list2) if rest in map1)
+        return [rest for (i, rest) in enumerate(list2) if rest in map1 and i + map1[rest] == minSum]
