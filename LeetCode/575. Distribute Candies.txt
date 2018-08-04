@@ -1,0 +1,29 @@
+// Java
+import java.util.HashSet;
+import java.util.Set;
+
+class Solution {
+    public int distributeCandies(int[] candies) {
+        Set<Integer> set = new HashSet<>(candies.length);
+        for (int candy : candies) {
+            set.add(candy);
+        }
+        return Math.min(candies.length / 2, set.size());
+    }
+}
+
+// Scala
+object Solution {
+    def distributeCandies(candies: Array[Int]): Int = {
+      Math.min(candies.length / 2, candies.toSet.size)
+    }
+  }
+
+// Python
+class Solution:
+    def distributeCandies(self, candies):
+        """
+        :type candies: List[int]
+        :rtype: int
+        """
+        return min(len(candies)/2, len(set(candies)))
