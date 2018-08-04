@@ -1,0 +1,59 @@
+// Java
+import java.util.Arrays;
+
+class Solution {
+    public int findUnsortedSubarray(int[] nums) {
+        int[] copy = Arrays.copyOf(nums, nums.length);
+        Arrays.sort(copy);
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+        for (int i = 0; i < nums.length; i++) {
+            if (copy[i] != nums[i]) {
+                min = Math.min(min, i);
+                max = Math.max(max, i);
+            }
+        }
+        if (min < max) {
+            return max - min + 1;
+        } else {
+            return 0;
+        }
+    }
+}
+
+// Scala
+object Solution {
+    def findUnsortedSubarray(nums: Array[Int]): Int = {
+      val length = nums.length
+      var begin = 1
+      var end = 0
+      var leftMax = nums.head
+      var rightMin = nums.last
+      for (i <- nums.indices) {
+        leftMax = Math.max(leftMax, nums(i))
+        rightMin = Math.min(rightMin, nums(length - 1 - i))
+        if (nums(i) < leftMax) end = i
+        if (nums(length - 1 - i) > rightMin) begin = length - 1 - i
+      }
+      end - begin + 1
+    }
+  }
+
+// Python
+class Solution:
+    def findUnsortedSubarray(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        length = len(nums)
+        start, end = 0, -1
+        leftMax, rightMin = nums[0], nums[length - 1]
+        for i in range(length):
+            leftMax = max(leftMax, nums[i])
+            rightMin = min(rightMin, nums[length - 1 - i])
+            if nums[i] < leftMax:
+                end = i
+            if nums[length - 1 - i] > rightMin:
+                start = length - 1 - i
+        return end - start + 1
