@@ -1,0 +1,39 @@
+// Java
+class Solution {
+    public List<Integer> preorder(Node root) {
+        if (root == null) {
+            return Collections.emptyList();
+        }
+        List<Integer> result = new ArrayList<>();
+        Deque<Node> queue = new ArrayDeque<>();
+        queue.addLast(root);
+        while (!queue.isEmpty()) {
+            Node node = queue.removeFirst();
+            result.add(node.val);
+            List<Node> children = new ArrayList<>(node.children);
+            Collections.reverse(children);
+            for (Node child : children) {
+                queue.addFirst(child);
+            }
+        }
+        return result;
+    }
+}
+
+// Python
+class Solution(object):
+    def preorder(self, root):
+        """
+        :type root: Node
+        :rtype: List[int]
+        """
+        result = []
+        if not root:
+            return result
+        stack = [root]
+        while stack:
+            node = stack.pop()
+            result.append(node.val)
+            for child in node.children[::-1]:
+                stack.append(child)
+        return result
