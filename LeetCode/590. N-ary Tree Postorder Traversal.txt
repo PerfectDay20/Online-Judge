@@ -1,0 +1,68 @@
+// Java recurisve
+import java.util.ArrayList;
+import java.util.List;
+
+class Solution {
+    public List<Integer> postorder(Node root) {
+        List<Integer> result = new ArrayList<>();
+        post(root, result);
+        return result;
+    }
+
+    private void post(Node root, List<Integer> result) {
+        if (root != null) {
+            for (Node child : root.children) {
+                post(child, result);
+            }
+            result.add(root.val);
+        }
+        
+    }
+}
+
+// Java Iterative
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Deque;
+import java.util.List;
+
+class Solution {
+    public List<Integer> postorder(Node root) {
+        if (root == null) {
+            return Collections.emptyList();
+        }
+        List<Integer> result = new ArrayList<>();
+        Deque<Node> stack = new ArrayDeque<>();
+        stack.push(root);
+
+        while (!stack.isEmpty()) {
+            Node node = stack.pop();
+            result.add(node.val);
+            for (Node child : node.children) {
+                stack.push(child);
+            }
+        }
+
+        Collections.reverse(result);
+        return result;
+    }
+}
+
+// Python
+class Solution(object):
+    def postorder(self, root):
+        """
+        :type root: Node
+        :rtype: List[int]
+        """
+        result = []
+        if not root:
+            return result
+        stack = [root]
+        while stack:
+            node = stack.pop()
+            result.append(node.val)
+            for child in node.children:
+                stack.append(child)
+        return result
