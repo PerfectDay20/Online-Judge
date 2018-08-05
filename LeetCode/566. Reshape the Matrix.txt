@@ -1,0 +1,58 @@
+// Java
+class Solution {
+    public int[][] matrixReshape(int[][] nums, int r, int c) {
+        if (nums.length * nums[0].length != r * c) {
+            return nums;
+        }
+        int curR = 0;
+        int curC = 0;
+
+        int[][] result = new int[r][c];
+        for (int i = 0; i < r; i++) {
+            for (int j = 0; j < c; j++) {
+                result[i][j] = nums[curR][curC];
+                if (curC == nums[0].length - 1) {
+                    curC = 0;
+                    curR++;
+                } else {
+                    curC++;
+                }
+            }
+        }
+        return result;
+    }
+}
+
+// Scala
+
+object Solution {
+    def matrixReshape(nums: Array[Array[Int]], r: Int, c: Int): Array[Array[Int]] = {
+      if (r * c != nums.length * nums(0).length) {
+        nums
+      } else {
+        val result = Array.ofDim[Int](r, c)
+        var curR = 0
+        var curC = 0
+        for (i <- 0 until r) {
+          for (j <- 0 until c) {
+            result(i)(j) = nums(curR)(curC)
+            curC += 1
+            if (curC == nums(0).length) {
+              curC = 0
+              curR += 1
+            }
+          }
+        }
+        result
+      }
+    }
+  }
+// Python
+import itertools
+
+class Solution:
+    def matrixReshape(self, nums, r, c):
+        if r * c != len(nums) * len(nums[0]):
+            return nums
+        it = itertools.chain(*nums)
+        return [list(itertools.islice(it, c)) for _ in range(r)]
