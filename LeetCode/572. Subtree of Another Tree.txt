@@ -1,0 +1,64 @@
+// Java
+class Solution {
+    public boolean isSubtree(TreeNode s, TreeNode t) {
+        if (s == null) {
+            return false;
+        }
+        return isSame(s, t) || isSubtree(s.left, t) || isSubtree(s.right, t);
+    }
+
+    private boolean isSame(TreeNode s, TreeNode t) {
+        if (s == null && t == null) {
+            return true;
+        } else if (s != null && t != null) {
+            if (s.val == t.val) {
+                return isSame(s.left, t.left) && isSame(s.right, t.right);
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+}
+
+// Scala
+
+object Solution {
+    def isSubtree(s: TreeNode, t: TreeNode): Boolean = {
+      if (s == null) {
+        false
+      } else{
+        isSame(s,t) || isSubtree(s.left, t) || isSubtree(s.right, t)
+      }
+    }
+  
+    def isSame(s: TreeNode, t: TreeNode): Boolean = {
+      if (s == null && t == null) {
+        true
+      }else if (s != null || t != null){
+        false
+      }else{
+        s.value == t.value && isSame(s.left, t.left) && isSame(s.right, t.right)
+      }
+    }
+  }
+// Python
+class Solution:
+    def isSubtree(self, s, t):
+        """
+        :type s: TreeNode
+        :type t: TreeNode
+        :rtype: bool
+        """
+        def isSame(s, t):
+            if not s and not t:
+                return True
+            if not s or not t:
+                return False
+            return s.val == t.val and isSame(s.left, t.left) and isSame(s.right, t.right)
+        
+        if not s:
+            return False
+        return isSame(s, t) or self.isSubtree(s.left, t) or self.isSubtree(s.right, t)
+    
