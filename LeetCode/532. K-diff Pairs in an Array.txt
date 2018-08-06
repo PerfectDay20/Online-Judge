@@ -1,0 +1,70 @@
+// Java
+import java.util.HashSet;
+import java.util.Set;
+
+class Solution {
+    public int findPairs(int[] nums, int k) {
+        if (k < 0) {
+            return 0;
+        } else if (k == 0) {
+            Set<Integer> set = new HashSet<>();
+            Set<Integer> duplicates = new HashSet<>();
+            for (int num : nums) {
+                if (set.contains(num)) {
+                    duplicates.add(num);
+                } else {
+                    set.add(num);
+                }
+            }
+            return duplicates.size();
+        } else {
+            Set<Integer> set = new HashSet<>();
+            int count = 0;
+            for (int num : nums) {
+                if (!set.contains(num)) {
+                    if (set.contains(num + k)) {
+                        count++;
+                    }
+                    if (set.contains(num - k)) {
+                        count++;
+                    }
+                    set.add(num);
+                }
+            }
+            return count;
+        }
+    }
+}
+
+// Scala
+object Solution {
+    def findPairs(nums: Array[Int], k: Int): Int = {
+      if (k < 0) {
+        0
+      } else if (k == 0) {
+        val counter = new collection.mutable.HashMap[Int, Int]()
+        nums.foreach(n => counter.put(n, counter.getOrElse(n, 0) + 1))
+        counter.count(e => e._2 > 1)
+      }else{
+        val set = Set(nums:_*)
+        set.count(n=> set.contains(n + k))
+      }
+    }
+  }
+
+// Python
+from collections import Counter
+class Solution:
+    def findPairs(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: int
+        """
+        if k < 0:
+            return 0
+        elif k == 0:
+            return sum([v > 1 for (k, v) in Counter(nums).items()])
+        else:
+            nSet = set(nums)
+            return len([n for n in nSet if n + k in nSet])
