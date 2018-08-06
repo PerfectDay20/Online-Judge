@@ -1,0 +1,54 @@
+// Java
+class Solution {
+    public int findTilt(TreeNode root) {
+        return sumTilt(root)[1];
+    }
+
+    private int[] sumTilt(TreeNode root){
+        if (root == null) {
+            return new int[] {0, 0};
+        } else {
+            int[] leftSumTilt = sumTilt(root.left);
+            int[] rightSumTilt = sumTilt(root.right);
+            int sum = root.val + leftSumTilt[0] + rightSumTilt[0];
+            int tilt = leftSumTilt[1] + rightSumTilt[1] + Math.abs(leftSumTilt[0] - rightSumTilt[0]);
+            return new int[] {sum, tilt};
+        }
+    }
+}
+
+// Scala
+object Solution {
+    def findTilt(root: TreeNode): Int = {
+      sumTilt(root)._2
+    }
+  
+    def sumTilt(root: TreeNode): (Int, Int) = {
+      if (root == null) {
+        (0, 0)
+      } else {
+        val leftSumTilt = sumTilt(root.left)
+        val rightSumTilt = sumTilt(root.right)
+        (root.value + leftSumTilt._1 + rightSumTilt._1,
+          leftSumTilt._2 + rightSumTilt._2 + math.abs(leftSumTilt._1 - rightSumTilt._1))
+      }
+    }
+  }
+// Python
+class Solution:
+    def findTilt(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+
+        def sumTilt(root):
+            if not root:
+                return (0, 0)
+            else:
+                leftSumTilt = sumTilt(root.left)
+                rightSumTilt = sumTilt(root.right)
+                return (root.val + leftSumTilt[0] + rightSumTilt[0],
+                 leftSumTilt[1] + rightSumTilt[1] + abs(leftSumTilt[0] - rightSumTilt[0]))
+
+        return sumTilt(root)[1]
