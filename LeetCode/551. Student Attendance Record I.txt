@@ -1,0 +1,22 @@
+// Java
+class Solution {
+    public boolean checkRecord(String s) {
+        return (s.indexOf("A") == s.lastIndexOf("A")) && (!s.contains("LLL"));
+    }
+}
+
+// Scala
+object Solution {
+  def checkRecord(s: String): Boolean = {
+    s.count(_.equals('A')) < 2 && !s.contains("LLL")
+  }
+}
+
+// Python
+class Solution:
+    def checkRecord(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        return s.count('A') < 2 and 'LLL' not in s
