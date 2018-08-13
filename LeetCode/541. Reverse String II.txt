@@ -1,0 +1,49 @@
+// Java, efficient and verbose
+class Solution {
+    public String reverseStr(String s, int k) {
+        char[] cs = s.toCharArray();
+        int n = cs.length / k;
+        for (int i = 0; i <= n; i++) {
+            if ((i & 1) == 0) {
+                if (i == n) {
+                    reverse(cs, i * k, cs.length - 1);
+                } else {
+                    reverse(cs, i * k, (i + 1) * k - 1);
+                }
+            }
+        }
+        return String.valueOf(cs);
+    }
+
+    private void reverse(char[] cs, int left, int right) {
+        for (int i = 0; i < (right - left + 1) / 2; i++) {
+            char c = cs[left + i];
+            cs[left + i] = cs[right - i];
+            cs[right - i] = c;
+        }
+    }
+}
+
+// Scala
+object Solution {
+    def reverseStr(s: String, k: Int): String = {
+      s.grouped(k).zipWithIndex.map(t => if (t._2 % 2 == 0) t._1.reverse else t._1).mkString("")
+    }
+  }
+
+// Python
+class Solution:
+    def reverseStr(self, s, k):
+        """
+        :type s: str
+        :type k: int
+        :rtype: str
+        """
+        ss = [s[i * k:(i + 1) * k] for i in range(len(s) // k + 1)]
+        result = []
+        for k, v in enumerate(ss):
+            if k % 2 == 0:
+                result.append(v[::-1])
+            else:
+                result.append(v)
+        return "".join(result)
