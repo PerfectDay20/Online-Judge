@@ -1,0 +1,75 @@
+// Java
+class Solution {
+    public int diameterOfBinaryTree(TreeNode root) {
+        if (root == null || (root.left == null) && (root.right == null)) {
+            return 0;
+        }
+        HeightLength result = compute(root);
+        return result.length;
+    }
+
+    private HeightLength compute(TreeNode node) {
+        if (node == null) {
+            return new HeightLength(-1, -1);
+        } else {
+            HeightLength left = compute(node.left);
+            HeightLength right = compute(node.right);
+            int height = Math.max(left.height, right.height) + 1;
+            int length = Math.max(Math.max(left.length, right.length), left.height + right.height + 2);
+            return new HeightLength(height, length);
+        }
+    }
+
+    private class HeightLength {
+        private int height;
+        private int length;
+
+        HeightLength(int height, int length) {
+            this.height = height;
+            this.length = length;
+        }
+    }
+}
+
+// Scala
+object Solution {
+    def diameterOfBinaryTree(root: TreeNode): Int = {
+      if (root == null || (root.left == null && root.right == null)) 0
+      else compute(root)._2
+    }
+  
+    def compute(node: TreeNode): (Int, Int) = {
+      if (node == null) {
+        (-1, -1)
+      } else {
+        val left = compute(node.left)
+        val right = compute(node.right)
+        val height = Math.max(left._1, right._1) + 1
+        val length = Array(left._2, right._2, left._1 + right._1 + 2).max
+        (height, length)
+      }
+    }
+  }
+
+  // Python
+  class Solution:
+    def diameterOfBinaryTree(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+
+        def compute(node):
+            if not node:
+                return -1, -1
+            else:
+                left = compute(node.left)
+                right = compute(node.right)
+                height = max(left[0], right[0]) + 1
+                length = max(left[1], right[1], left[0] + right[0] + 2)
+                return height, length
+
+        if not root or (not root.left and not root.right):
+            return 0
+        else:
+            return compute(root)[1]
