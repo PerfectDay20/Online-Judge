@@ -1,0 +1,82 @@
+// Java, initial thought, forgot to use the attribute of BST
+class Solution {
+    public TreeNode convertBST(TreeNode root) {
+        Map<Integer, Integer> oldToNew = new HashMap<>();
+        updateKey(oldToNew, root);
+
+        Integer[] keys = oldToNew.keySet().toArray(new Integer[0]);
+        Arrays.sort(keys);
+        int sum = 0;
+        for (int i = keys.length - 1; i >= 0; i--) {
+            sum += keys[i];
+            oldToNew.put(keys[i], sum);
+        }
+        updateNode(oldToNew, root);
+        return root;
+    }
+
+    private void updateKey(Map<Integer, Integer> oldToNew, TreeNode node) {
+        if (node != null) {
+            oldToNew.put(node.val, 0);
+            updateKey(oldToNew, node.left);
+            updateKey(oldToNew, node.right);
+        }
+    }
+
+    private void updateNode(Map<Integer, Integer> oldToNew, TreeNode node) {
+        if(node != null){
+            node.val = oldToNew.get(node.val);
+            updateNode(oldToNew, node.left);
+            updateNode(oldToNew, node.right);
+        }
+    }
+}
+
+// Java 
+class Solution {
+    int curSum = 0;
+
+    public TreeNode convertBST(TreeNode root) {
+        traverse(root);
+        return root;
+    }
+
+    private void traverse(TreeNode node) {
+        if (node != null) {
+            traverse(node.right);
+            node.val += curSum;
+            curSum = node.val;
+            traverse(node.left);
+        }
+    }
+}
+
+// Scala
+object Solution {
+  var curSum = 0
+
+  def convertBST(root: TreeNode): TreeNode = {
+    if (root != null) {
+      convertBST(root.right)
+      root.value += curSum
+      curSum = root.value
+      convertBST(root.left)
+    }
+    root
+  }
+}
+
+// Python
+class Solution:
+    curSum = 0
+    def convertBST(self, root):
+        """
+        :type root: TreeNode
+        :rtype: TreeNode
+        """
+        if root:
+            self.convertBST(root.right)
+            root.val += self.curSum
+            self.curSum = root.val
+            self.convertBST(root.left)
+        return root
