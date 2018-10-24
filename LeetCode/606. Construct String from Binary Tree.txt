@@ -1,0 +1,61 @@
+// java
+class Solution {
+    public String tree2str(TreeNode t) {
+        if (t == null) {
+            return "";
+        } else {
+            String root = String.valueOf(t.val);
+            String left = tree2str(t.left);
+            String right = tree2str(t.right);
+            if (t.left == null && t.right == null) {
+                return root;
+            } else if (t.left == null) {
+                return String.format("%s()(%s)",root, right);
+            } else if (t.right == null) {
+                return String.format("%s(%s)",root, left);
+            } else {
+                return String.format("%s(%s)(%s)", root, left, right);
+            }
+        }
+
+    }
+}
+
+// scala
+object Solution {
+    def tree2str(t: TreeNode): String = {
+      if (t == null) {
+        ""
+      } else {
+        val root = t.value.toString
+        val left = tree2str(t.left)
+        val right = tree2str(t.right)
+        (left, right) match {
+          case ("", "") => t.value.toString
+          case (_, "") => s"$root($left)"
+          case ("", _) => s"$root()($right)"
+          case _ => s"$root($left)($right)"
+        }
+      }
+    }
+  }
+
+// python
+class Solution:
+    def tree2str(self, t):
+        """
+        :type t: TreeNode
+        :rtype: str
+        """
+        if not t:
+            return ''
+        root = str(t.val)
+        left = self.tree2str(t.left)
+        right = self.tree2str(t.right)
+        if not left and not right:
+            return root
+        if not left:
+            return "%s()(%s)" % (root, right)
+        if not right:
+            return "%s(%s)" % (root, left)
+        return "%s(%s)(%s)" % (root, left, right)
