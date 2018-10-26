@@ -1,0 +1,39 @@
+// java
+class Solution {
+    public boolean judgeSquareSum(int c) {
+        for (int i = 0; i <= Math.sqrt(c / 2.0); i++) {
+            int left = c - i * i;
+            double root = Math.sqrt(left);
+            if (root == (int) root) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
+// scala
+object Solution {
+  def judgeSquareSum(c: Int): Boolean = {
+    (0 to math.sqrt(c / 2.0).toInt).exists { i => {
+      val left = math.sqrt(c - i * i)
+      left == left.toInt
+    }
+    }
+  }
+}
+
+// python
+from math import sqrt
+
+class Solution:
+    def judgeSquareSum(self, c):
+        """
+        :type c: int
+        :rtype: bool
+        """
+        for i in range(int(sqrt(c / 2) + 1)):
+            left = sqrt(c - i * i)
+            if left == int(left):
+                return True
+        return False
