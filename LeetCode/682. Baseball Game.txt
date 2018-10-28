@@ -1,0 +1,60 @@
+// java
+import java.util.ArrayDeque;
+import java.util.Deque;
+
+class Solution {
+    public int calPoints(String[] ops) {
+        Deque<Integer> stack = new ArrayDeque<>(ops.length);
+        for (String op : ops) {
+            if (op.equals("C")) {
+                stack.removeLast();
+            } else if (op.equals("D")) {
+                stack.addLast(stack.getLast() * 2);
+            } else if (op.equals("+")) {
+                Integer last = stack.removeLast();
+                Integer secondLast = stack.peekLast();
+                stack.addLast(last);
+                stack.addLast(last + secondLast);
+            } else {
+                stack.addLast(Integer.valueOf(op));
+            }
+        }
+        return stack.stream().reduce(0, Integer::sum);
+    }
+}
+
+// scala
+import scala.collection.mutable.ArrayBuffer
+
+object Solution {
+  def calPoints(ops: Array[String]): Int = {
+    val stack = ArrayBuffer[Int]()
+    ops.foreach {
+      case "C" => stack.remove(stack.length - 1)
+      case "D" => stack.append(stack.last * 2)
+      case "+" => stack.append(stack.last + stack.init.last)
+      case n => stack.append(n.toInt)
+    }
+    stack.sum
+  }
+}
+
+// python
+class Solution:
+    def calPoints(self, ops):
+        """
+        :type ops: List[str]
+        :rtype: int
+        """
+        stack = []
+        for op in ops:
+            if op == 'C':
+                stack = stack[:-1]
+            elif op == 'D':
+                stack.append(2*stack[-1])
+            elif op == '+':
+                stack.append(stack[-1] + stack[-2])
+            else:
+                stack.append(int(op))
+        return sum(stack)
+        
