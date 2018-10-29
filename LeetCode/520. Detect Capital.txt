@@ -1,0 +1,34 @@
+// java
+class Solution {
+    public boolean detectCapitalUse(String word) {
+        return allUpper(word) || allLower(word) || firstCap(word);
+    }
+
+    private boolean allUpper(String word) {
+        return word.chars().allMatch(Character::isUpperCase);
+    }
+
+    private boolean allLower(String word) {
+        return word.chars().allMatch(Character::isLowerCase);
+    }
+
+    private boolean firstCap(String word) {
+        return Character.isUpperCase(word.charAt(0)) && allLower(word.substring(1));
+    }
+}
+
+// scala
+object Solution {
+  def detectCapitalUse(word: String): Boolean = {
+    word.forall(_.isUpper) || word.forall(_.isLower) || (word(0).isUpper && word.tail.forall(_.isLower))
+  }
+}
+
+// python
+class Solution:
+    def detectCapitalUse(self, word):
+        """
+        :type word: str
+        :rtype: bool
+        """
+        return word.isupper() or word.islower() or word.istitle()
