@@ -1,0 +1,50 @@
+// java
+class Solution {
+    public boolean canPlaceFlowers(int[] flowerbed, int n) {
+        int places = 0;
+        int zeroCount = 1;
+        for (int i : flowerbed) {
+            if (i == 0) {
+                zeroCount++;
+            } else {
+                places += (zeroCount - 1) / 2;
+                zeroCount = 0;
+            }
+        }
+        places += zeroCount / 2;
+        return places >= n;
+    }
+}
+
+// scala 
+object Solution {
+  def canPlaceFlowers(flowerbed: Array[Int], n: Int): Boolean = {
+    var places = 0
+    var zeroCount = 1
+    flowerbed.foreach {
+      case 0 => zeroCount += 1
+      case 1 =>
+        places += (zeroCount - 1) / 2
+        zeroCount = 0
+    }
+    places + zeroCount / 2 >= n
+  }
+}
+
+// python
+class Solution:
+    def canPlaceFlowers(self, flowerbed, n):
+        """
+        :type flowerbed: List[int]
+        :type n: int
+        :rtype: bool
+        """
+        places = 0
+        zeroCount = 1
+        for i in flowerbed:
+            if i == 0:
+                zeroCount += 1
+            else:
+                places += (zeroCount - 1) // 2
+                zeroCount = 0
+        return places + zeroCount / 2 >= n
