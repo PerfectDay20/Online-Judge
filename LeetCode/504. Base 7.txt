@@ -1,0 +1,60 @@
+// java
+class Solution {
+    public String convertToBase7(int num) {
+        if (num == 0) {
+            return "0";
+        }
+        int sign = num >= 0 ? 1 : -1;
+        StringBuilder sb = new StringBuilder();
+        num = Math.abs(num);
+        while (num > 0) {
+            int mod = num % 7;
+            num /= 7;
+            sb.append(mod);
+        }
+        if (sign == -1) {
+            sb.append("-");
+        }
+        return sb.reverse().toString();
+    }
+}
+
+// scala
+object Solution {
+  def convertToBase7(num: Int): String = {
+    if (num == 0) {
+      "0"
+    } else {
+      val sign = if (num >= 0) 1 else -1
+      var n = math.abs(num)
+      val sb = new StringBuilder()
+      while (n > 0) {
+        sb.append(n % 7)
+        n /= 7
+      }
+      if (sign == -1) {
+        sb.append("-")
+      }
+      sb.reverse.toString()
+    }
+  }
+}
+
+// python
+class Solution:
+    def convertToBase7(self, num):
+        """
+        :type num: int
+        :rtype: str
+        """
+        if num == 0:
+            return "0"
+        is_neg = num < 0
+        result = []
+        num = abs(num)
+        while num > 0:
+            result.append(num % 7)
+            num //= 7
+        if is_neg:
+            result.append("-")
+        return ''.join(str(x) for x in result[::-1])
