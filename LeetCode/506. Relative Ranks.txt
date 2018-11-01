@@ -1,0 +1,62 @@
+// java
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+class Solution {
+    public String[] findRelativeRanks(int[] nums) {
+        List<Integer> sorted =
+                Arrays.stream(nums).boxed().sorted(Comparator.reverseOrder()).collect(Collectors.toList());
+
+        Map<Integer, String> map = new HashMap<>();
+        for (int i = 0; i < sorted.size(); i++) {
+            if (i == 0) {
+                map.put(sorted.get(i), "Gold Medal");
+            } else if (i == 1) {
+                map.put(sorted.get(i), "Silver Medal");
+            }else if (i == 2){
+                map.put(sorted.get(i), "Bronze Medal");
+            }else{
+                map.put(sorted.get(i), String.valueOf(i + 1));
+            }
+        }
+
+        return Arrays.stream(nums).boxed().map(map::get).toArray(String[]::new);
+    }
+}
+
+// scala
+object Solution {
+  def findRelativeRanks(nums: Array[Int]): Array[String] = {
+    val valueToRank = nums.sorted.reverse.zipWithIndex.map {
+      case (i, 0) => (i, "Gold Medal")
+      case (i, 1) => (i, "Silver Medal")
+      case (i, 2) => (i, "Bronze Medal")
+      case (i, index) => (i, (index + 1).toString)
+    }.toMap
+
+    nums.map(valueToRank)
+  }
+}
+
+// python
+class Solution:
+    def findRelativeRanks(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[str]
+        """
+        valueToRank = {}
+        for (index, value) in enumerate(sorted(nums)[::-1]):
+            if index == 0:
+                valueToRank[value] = 'Gold Medal'
+            elif index == 1:
+                valueToRank[value] = 'Silver Medal'
+            elif index == 2:
+                valueToRank[value] = 'Bronze Medal'
+            else:
+                valueToRank[value] = str(index + 1)
+        return [valueToRank[v] for v in nums]
