@@ -1,0 +1,44 @@
+// java
+class Solution {
+    public String licenseKeyFormatting(String S, int K) {
+        String s = S.toUpperCase().replace("-", "");
+        if (s.length() == 0) {
+            return "";
+        }
+        StringBuilder sb = new StringBuilder();
+        int firstLength = s.length() % K;
+        if (firstLength != 0) {
+            for (int i = 0; i < firstLength; i++) {
+                sb.append(s.charAt(i));
+            }
+            sb.append("-");
+        }
+
+        for (int i = firstLength; i < s.length(); i += K) {
+            for (int j = 0; j < K; j++) {
+                sb.append(s.charAt(i + j));
+            }
+            sb.append("-");
+        }
+
+        return sb.deleteCharAt(sb.length() - 1).toString();
+    }
+}
+
+// scala
+object Solution {
+  def licenseKeyFormatting(S: String, K: Int): String = {
+    S.toUpperCase().replace("-", "").reverse.grouped(K).mkString("-").reverse
+  }
+}
+
+// python
+class Solution:
+    def licenseKeyFormatting(self, S, K):
+        """
+        :type S: str
+        :type K: int
+        :rtype: str
+        """
+        reversed_str = S.upper().replace('-', '')[::-1]
+        return '-'.join([reversed_str[i:i + K] for i in range(0, len(reversed_str), K)])[::-1]
