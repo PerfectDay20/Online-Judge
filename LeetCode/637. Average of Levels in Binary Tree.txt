@@ -1,0 +1,51 @@
+// java
+class Solution {
+    public List<Double> averageOfLevels(TreeNode root) {
+        List<Double> result = new ArrayList<>();
+        Deque<TreeNode> queue = new ArrayDeque<>();
+        queue.addLast(root);
+        int size;
+        while ((size = queue.size()) > 0) {
+            double sum = 0;
+            for (int i = 0; i < size; i++) {
+                TreeNode first = queue.removeFirst();
+                sum += first.val;
+                if (first.left != null) {
+                    queue.addLast(first.left);
+                }
+                if (first.right != null) {
+                    queue.addLast(first.right);
+                }
+            }
+            result.add(sum / size);
+        }
+        return result;
+    }
+}
+
+// scala
+object Solution {
+  def averageOfLevels(root: TreeNode): Array[Double] = {
+    var nodes = Seq(root)
+    val result = ArrayBuffer[Double]()
+    while (nodes.length > 0) {
+      result.append(nodes.map(_.value.toDouble).sum / nodes.length)
+      nodes = (nodes.map(_.left) ++ nodes.map(_.right)).filter(_ != null)
+    }
+    result.toArray
+  }
+}
+
+// python
+class Solution:
+    def averageOfLevels(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[float]
+        """
+        nodes = [root]
+        result = []
+        while nodes:
+            result.append(sum(n.val for n in nodes) / len(nodes))
+            nodes = [n.left for n in nodes if n.left] + [n.right for n in nodes if n.right]
+        return result
