@@ -1,0 +1,55 @@
+// java
+class Solution {
+    public Node construct(int[][] grid) {
+        return construct(grid, 0, 0, grid.length);
+    }
+
+    private Node construct(int[][] grid, int startX, int startY, int length) {
+        if (isAllSame(grid, startX, startY, length)) {
+            return new Node(grid[startX][startY] == 1, true, null, null, null, null);
+        } else {
+            Node topLeft = construct(grid, startX, startY, length / 2);
+            Node topRight = construct(grid, startX, startY + length / 2, length / 2);
+            Node bottomLeft = construct(grid, startX + length / 2, startY, length / 2);
+            Node bottomRight = construct(grid, startX + length / 2, startY + length / 2, length / 2);
+            return new Node(true, false, topLeft, topRight, bottomLeft, bottomRight);
+        }
+    }
+
+    private boolean isAllSame(int[][] grid, int startX, int startY, int length) {
+        int startVal = grid[startX][startY];
+        for (int i = startX; i < startX + length; i++) {
+            for (int j = startY; j < startY + length; j++) {
+                if (grid[i][j] != startVal) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+}
+
+// python
+class Solution:
+    def construct(self, grid):
+        """
+        :type grid: List[List[int]]
+        :rtype: Node
+        """
+
+        def allSame(start_x, start_y, length):
+            return all(grid[i][j] == grid[start_x][start_y]
+                       for i in range(start_x, start_x + length)
+                       for j in range(start_y, start_y + length))
+
+        def construct(start_x, start_y, length):
+            if allSame(start_x, start_y, length):
+                return Node(grid[start_x][start_y] == 1, True, None, None, None, None)
+            else:
+                topLeft = construct(start_x, start_y, length // 2)
+                topRight = construct(start_x, start_y + length // 2, length // 2)
+                bottomLeft = construct(start_x + length // 2, start_y, length // 2)
+                bottomRight = construct(start_x + length // 2, start_y + length // 2, length // 2)
+                return Node(False, False, topLeft, topRight, bottomLeft, bottomRight)
+
+        return construct(0, 0, len(grid))
