@@ -1,0 +1,39 @@
+// java
+class Solution {
+    public List<List<Integer>> levelOrder(Node root) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (root == null) {
+            return result;
+        }
+        Deque<Node> nodesInLevel = new ArrayDeque<>();
+        nodesInLevel.addLast(root);
+
+        int count = 0;
+        while ((count = nodesInLevel.size()) != 0) {
+            List<Integer> levelResult = new ArrayList<>();
+            for (int i = 0; i < count; i++) {
+                Node node = nodesInLevel.removeFirst();
+                levelResult.add(node.val);
+                for (Node child : node.children) {
+                    nodesInLevel.addLast(child);
+                }
+            }
+            result.add(levelResult);
+        }
+        return result;
+    }
+}
+
+// python
+class Solution(object):
+    def levelOrder(self, root):
+        """
+        :type root: Node
+        :rtype: List[List[int]]
+        """
+        result = []
+        one_level = [root]
+        while any(one_level):
+            result.append([n.val for n in one_level])
+            one_level = [n for node in one_level for n in node.children if node.children]
+        return result
