@@ -1,0 +1,44 @@
+// java
+class Solution {
+    public int largestPalindrome(int n) {
+        if (n == 1) {
+            return 9;
+        }
+        long max = (long)(Math.pow(10, n) - 1);
+        long min = max / 10;
+
+        for (long v = max * max / ((int)(Math.pow(10, n))); v > 0; v--) {
+            long p = Long.valueOf(v + new StringBuilder(String.valueOf(v)).reverse().toString());
+            for (long i = max; i >= min; i--) {
+                if (i * i < p) {
+                    break;
+                }
+                if (p % i == 0) {
+                    return (int) (p % 1337);
+                }
+            }
+        }
+        throw new IllegalArgumentException();
+    }
+}
+
+// scala 
+object Solution {
+  def largestPalindrome(n: Int): Int = {
+    if (n == 1) return 9
+    val max = math.pow(10, n).toLong - 1
+    val min = max / 10
+    for (firstHalf <- (max * max / math.pow(10, n)).toLong.to(0L, -1)) {
+      val p = (firstHalf + (firstHalf + "").reverse).toLong
+      var i = max
+      while (i >= min && i * i >= p) {
+        if (p % i == 0)
+          return (p % 1337).toInt
+        i = i - 1
+      }
+    }
+    -1
+  }
+}
+
+// python
