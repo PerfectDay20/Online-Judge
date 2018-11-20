@@ -1,0 +1,37 @@
+// java
+class Solution {
+    public int[] constructRectangle(int area) {
+        int root = (int) Math.sqrt(area);
+        for (int i = root; i >= 1; i--) {
+            if (area % i == 0) {
+                return new int[] {area / i, i};
+            }
+        }
+        throw new IllegalArgumentException();
+    }
+}
+
+// scala 
+object Solution {
+  def constructRectangle(area: Int): Array[Int] = {
+    var root = math.sqrt(area).toInt
+    while (area % root != 0) {
+      root -= 1
+    }
+    Array(area / root, root)
+  }
+}
+
+// python
+from math import sqrt
+
+class Solution:
+    def constructRectangle(self, area):
+        """
+        :type area: int
+        :rtype: List[int]
+        """
+        root = int(sqrt(area))
+        while area % root != 0:
+            root -= 1
+        return [area // root, root]
