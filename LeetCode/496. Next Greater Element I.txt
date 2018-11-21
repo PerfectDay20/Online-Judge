@@ -1,0 +1,61 @@
+// java
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.HashMap;
+import java.util.Map;
+
+class Solution {
+    public int[] nextGreaterElement(int[] nums1, int[] nums2) {
+        Deque<Integer> queue = new ArrayDeque<>();
+        Map<Integer, Integer> nextGreater = new HashMap<>();
+        for (int i : nums2) {
+            while (!queue.isEmpty() && queue.getLast() < i) {
+                nextGreater.put(queue.removeLast(), i);
+            }
+            queue.addLast(i);
+        }
+        for (Integer i: queue) {
+            nextGreater.put(i, -1);
+        }
+        int[] result = new int[nums1.length];
+        for (int i = 0; i < result.length; i++) {
+            result[i] = nextGreater.get(nums1[i]);
+        }
+        return result;
+    }
+}
+
+// scala
+import scala.collection.mutable
+import scala.collection.mutable.ArrayBuffer
+
+object Solution {
+  def nextGreaterElement(nums1: Array[Int], nums2: Array[Int]): Array[Int] = {
+    val nextGreater = mutable.Map[Int, Int]()
+    val queue = new ArrayBuffer[Int]()
+    nums2.foreach(i => {
+      while (queue.nonEmpty && queue.last < i) {
+        nextGreater.put(queue.remove(queue.length - 1), i)
+      }
+      queue.append(i)
+    })
+    nums1.map(nextGreater.getOrElse(_, -1))
+  }
+}
+
+// python
+class Solution:
+    def nextGreaterElement(self, nums1, nums2):
+        """
+        :type nums1: List[int]
+        :type nums2: List[int]
+        :rtype: List[int]
+        """
+        next_greater = dict()
+        queue = []
+        for i in nums2:
+            while queue and queue[-1] < i:
+                next_greater[queue[-1]] = i
+                queue = queue[:-1]
+            queue.append(i)
+        return [next_greater.get(i, -1) for i in nums1]
