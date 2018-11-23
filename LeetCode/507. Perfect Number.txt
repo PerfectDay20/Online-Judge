@@ -1,0 +1,43 @@
+// java
+class Solution {
+    public boolean checkPerfectNumber(int num) {
+        if (num <= 1) {
+            return false;
+        }
+        int sum = 1;
+        for (int i = 2; i <= Math.sqrt(num); i++) {
+            if (num % i == 0) {
+                sum = sum + i + num / i;
+            }
+        }
+        return sum == num;
+    }
+}
+
+// scala
+object Solution {
+  def checkPerfectNumber(num: Int): Boolean = {
+    if (num <= 1){
+      false
+    }else{
+      1 + (2 to math.sqrt(num).toInt).filter(num%_==0).map(i=>i+num/i).sum == num
+    }
+  }
+}
+
+// python
+class Solution:
+    def nextGreaterElement(self, nums1, nums2):
+        """
+        :type nums1: List[int]
+        :type nums2: List[int]
+        :rtype: List[int]
+        """
+        next_greater = dict()
+        queue = []
+        for i in nums2:
+            while queue and queue[-1] < i:
+                next_greater[queue[-1]] = i
+                queue = queue[:-1]
+            queue.append(i)
+        return [next_greater.get(i, -1) for i in nums1]
